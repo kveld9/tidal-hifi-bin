@@ -1,0 +1,32 @@
+# Template file for Tidal Hi-Fi for Void Linux distribution.
+# Many thanks to https://aur.archlinux.org/packages/tidal-hifi-bin for some aspects of this template.
+pkgname=tidal-hifi-bin
+version=5.17.0
+revision=1
+build_style=gnu-makefile
+hostmakedepends="unzip"
+depends="libXScrnSaver nss gtk+3"
+short_desc="The web version of listen.tidal.com running in electron with Hi-Fi (High & Max) support thanks to widevine. Binary version."
+maintainer="kveld9 <kveld9@disroot.org>"
+license="MIT"
+homepage="https://github.com/Mastermindzh/tidal-hifi"
+distfiles="https://github.com/Mastermindzh/tidal-hifi/releases/download/${version}/tidal-hifi-${version}.tar.gz"
+checksum="c5db921e92ddb5cb38ff28157d5ed0c61b47d99855aa9be99f9f3fcdd5f4a3ab"
+
+do_build() {
+    return 0
+}
+
+do_install() {
+    cd ${wrksrc}
+
+    install -d ${DESTDIR}/opt/tidal-hifi/ ${DESTDIR}/usr/bin
+
+    cp -r * ${DESTDIR}/opt/tidal-hifi/
+    chmod +x ${DESTDIR}/opt/tidal-hifi/tidal-hifi
+
+    ln -s /opt/tidal-hifi/tidal-hifi ${DESTDIR}/usr/bin/tidal-hifi
+
+    install -Dm644 ${FILESDIR}/icon.png ${DESTDIR}/usr/share/pixmaps/tidal-hifi.png
+    install -Dm644 ${FILESDIR}/tidal-hifi.desktop ${DESTDIR}/usr/share/applications/tidal-hifi.desktop
+}
